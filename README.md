@@ -42,6 +42,8 @@ This project began as a personal tool to help me understand how portfolio optimi
 Since I don’t short assets in my own investing, I focused on long-only constraints throughout. I’ve gradually added features like minimum/maximum weight constraints and visualizations to help understand the tradeoffs involved.
 The notebook is designed to be a clear, practical reference that can be extended in the future as I explore more advanced models.
 
+## HTML Version
+You can view the HTML version of this notebook [here](https://endregb.github.io/efficient-frontier/notebook.html).
 
 ## Getting Started
 
