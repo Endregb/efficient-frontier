@@ -22,6 +22,9 @@ Built as a personal tool to understand the efficient frontier for real-world inv
 - Pie charts of asset allocations
 - Side-by-side comparisons of how constraints affect shape and allocation
 
+<img src="figures/SLSQP_vs_random.png" alt="Efficient frontier plot" width="600"/>
+<img src="figures/SLSQP_vs_minweights.png" alt="Efficient frontier plot" width="600"/>
+
 ## Limitations
 
 - Based on historical mean returns and covariances

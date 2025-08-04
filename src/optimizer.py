@@ -5,16 +5,31 @@ from scipy.optimize import minimize
 
 def monte_carlo(N, tickers, annualized_mean_returns, annualized_covariance):
     """
-    Generates N random portfolios
-    Input:
-        N: number of random portfolios
-        tickers: list of tickersymbols
-        annualized_mean_returns: annualized mean returns of asset
-        annualized_covariance: annualized covariance matrix of assets 
-    Output:
-        random_weights_df: dataframe of N random portfolios
-        portfolio_returns: array of portfolio returns
-        portfolio_volatility: array of portfolio volatility
+    Generates N random portfolios using Monte Carlo simulation for portfolio optimization analysis.
+    
+    This function creates random weight allocations and calculates the corresponding portfolio
+    returns and volatilities to visualize the risk-return landscape of possible portfolios.
+    
+    Parameters:
+    -----------
+    N : int
+        Number of random portfolios to generate
+    tickers : list
+        List of ticker symbols for the assets in the portfolio
+    annualized_mean_returns : array-like
+        Annualized expected returns for each asset
+    annualized_covariance : array-like
+        Annualized covariance matrix of asset returns
+    
+    Returns:
+    --------
+    tuple : (random_weights_df, portfolio_returns, portfolio_volatilities)
+        random_weights_df : pandas.DataFrame
+            DataFrame containing the weights for each random portfolio
+        portfolio_returns : numpy.ndarray
+            Array of portfolio returns for each random portfolio
+        portfolio_volatilities : numpy.ndarray
+            Array of portfolio volatilities (risk) for each random portfolio
     """
     random_weights = np.zeros((N, len(tickers)))
     portfolio_returns = []
@@ -44,8 +59,35 @@ def monte_carlo(N, tickers, annualized_mean_returns, annualized_covariance):
 
 def markowitz_mean_variance(covariance, mean_returns = None, desired_return = 0, total_weight = 1):
     """
-    Calculates the weights of the portfolio minimizing risk given a set of constraints, 
-    using Markowitz mean-variance method (Lagrange-multipliers)
+    Calculates optimal portfolio weights using the analytical Markowitz mean-variance method.
+    
+    This function uses Lagrange multipliers to solve the quadratic optimization problem
+    analytically. It can find either the minimum variance portfolio (when desired_return=0)
+    or the portfolio that minimizes risk for a specific target return.
+    
+    Parameters:
+    -----------
+    covariance : array-like
+        Covariance matrix of asset returns
+    mean_returns : array-like, optional
+        Expected returns for each asset (required when desired_return > 0)
+    desired_return : float, default=0
+        Target portfolio return. If 0, finds minimum variance portfolio
+    total_weight : float, default=1
+        Total portfolio weight constraint (typically 1 for fully invested)
+    
+    Returns:
+    --------
+    tuple : (weights, lagrange_multipliers)
+        weights : numpy.ndarray
+            Optimal portfolio weights
+        lagrange_multipliers : numpy.ndarray
+            Lagrange multipliers from the optimization (for analysis)
+    
+    Notes:
+    ------
+    This method assumes no bounds on weights (allows negative weights/short selling).
+    For constrained optimization, use portfolio_minimize() or portfolio_maximize_sharpe().
     """
     n = covariance.shape[0]
     one = np.ones((n, 1)) # n x 1
@@ -74,9 +116,39 @@ def markowitz_mean_variance(covariance, mean_returns = None, desired_return = 0,
     return weights, lagrange_multiplier
 
 def portfolio_minimize(mean_returns, covariance, desired_return, min_weight = 0.0, max_weight = 1.0):
-    """ 
-    Uses scipy.optimize.minimize (SLSQP) to minimize the portfolio variance given a set
-    of constraints, bounds and an initial guess
+    """
+    Minimizes portfolio variance for a target return using numerical optimization (SLSQP).
+    
+    This function uses Sequential Least Squares Programming to find the portfolio with
+    minimum risk (variance) that achieves a specific target return, subject to weight
+    constraints. This is useful for constructing the efficient frontier.
+    
+    Parameters:
+    -----------
+    mean_returns : array-like
+        Expected returns for each asset
+    covariance : array-like
+        Covariance matrix of asset returns
+    desired_return : float
+        Target portfolio return to achieve
+    min_weight : float, default=0.0
+        Minimum weight for any individual asset (0.0 = no short selling)
+    max_weight : float, default=1.0
+        Maximum weight for any individual asset (1.0 = no leverage)
+    
+    Returns:
+    --------
+    scipy.optimize.OptimizeResult
+        Optimization result containing:
+        - x: optimal portfolio weights
+        - success: whether optimization converged
+        - fun: final objective value (portfolio variance)
+        - message: optimization status message
+    
+    Notes:
+    ------
+    Uses equality constraints for target return and weight sum = 1.
+    Bounds prevent short selling and leverage when using default parameters.
     """
 
     # Initial guess with equal weights
@@ -102,9 +174,39 @@ def portfolio_minimize(mean_returns, covariance, desired_return, min_weight = 0.
     return result
 
 def portfolio_maximize_sharpe(mean_returns, covariance, risk_free_rate, min_weight = 0.0, max_weight = 1.0):
-    """ 
-    Uses scipy.optimize.minimize (SLSQP) to maximize the Sharpe ratio of a portfolio.
-    This finds the portfolio with the highest risk-adjusted return.
+    """
+    Maximizes the Sharpe ratio to find the optimal risk-adjusted portfolio.
+    
+    This function finds the portfolio that provides the highest risk-adjusted return
+    (Sharpe ratio) by minimizing the negative Sharpe ratio using numerical optimization.
+    This represents the tangency portfolio on the efficient frontier.
+    
+    Parameters:
+    -----------
+    mean_returns : array-like
+        Expected returns for each asset
+    covariance : array-like
+        Covariance matrix of asset returns
+    risk_free_rate : float
+        Risk-free rate of return (e.g., government bond yield)
+    min_weight : float, default=0.0
+        Minimum weight for any individual asset (0.0 = no short selling)
+    max_weight : float, default=1.0
+        Maximum weight for any individual asset (1.0 = no leverage)
+    
+    Returns:
+    --------
+    scipy.optimize.OptimizeResult
+        Optimization result containing:
+        - x: optimal portfolio weights for maximum Sharpe ratio
+        - success: whether optimization converged
+        - fun: negative Sharpe ratio (multiply by -1 to get actual Sharpe ratio)
+        - message: optimization status message
+    
+    Notes:
+    ------
+    The Sharpe ratio is calculated as (portfolio_return - risk_free_rate) / portfolio_volatility.
+    This portfolio represents the optimal point for mean-variance investors.
     """
 
     # Initial guess with equal weights
