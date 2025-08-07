@@ -7582,6 +7582,19 @@ a.anchor-link {
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cc9d7d56">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="3.-Gathering-Data">3. Gathering Data<a class="anchor-link" href="#3.-Gathering-Data">¶</a></h2><p>To construct the efficient frontier and calculate the Sharpe ratio, we need historical price data for the assets in our portfolio. We will use the <code>yfinance</code> library to fetch this data.</p>
+<div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=583e2012">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7757,7 +7770,7 @@ Portfolio has moderate sector diversification
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="3.-Monte-Carlo-Simulation:-Visualizing-the-portfolio-landscape">3. Monte Carlo Simulation: Visualizing the portfolio landscape<a class="anchor-link" href="#3.-Monte-Carlo-Simulation:-Visualizing-the-portfolio-landscape">¶</a></h2><p>In this section, we generate thousands of random portfolios by assigning random weights to a selection of assets. For each portfolio, we calculate:</p>
+<h2 id="4.-Monte-Carlo-Simulation:-Visualizing-the-portfolio-landscape">4. Monte Carlo Simulation: Visualizing the portfolio landscape<a class="anchor-link" href="#4.-Monte-Carlo-Simulation:-Visualizing-the-portfolio-landscape">¶</a></h2><p>In this section, we generate thousands of random portfolios by assigning random weights to a selection of assets. For each portfolio, we calculate:</p>
 <ul>
 <li>Expected return (annualized)</li>
 <li>Volatility (standard deviation, annualized)</li>
@@ -7901,7 +7914,7 @@ Maximum Sharpe-ratio: 2.8663
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="4.-Analytical-Mean-Variance-Optimization-(Markowitz)">4. Analytical Mean-Variance Optimization (Markowitz)<a class="anchor-link" href="#4.-Analytical-Mean-Variance-Optimization-(Markowitz)">¶</a></h2><p>We now derive the efficient frontier analytically using the Markowitz mean-variance optimization framework. This involves solving a constrained quadratic optimization problem with Lagrange multipliers to find the optimal portfolio weights that minimize risk for a given level of expected return, or maximize return for a given level of risk.</p>
+<h2 id="5.-Analytical-Mean-Variance-Optimization-(Markowitz)">5. Analytical Mean-Variance Optimization (Markowitz)<a class="anchor-link" href="#5.-Analytical-Mean-Variance-Optimization-(Markowitz)">¶</a></h2><p>We now derive the efficient frontier analytically using the Markowitz mean-variance optimization framework. This involves solving a constrained quadratic optimization problem with Lagrange multipliers to find the optimal portfolio weights that minimize risk for a given level of expected return, or maximize return for a given level of risk.</p>
 <h4 id="Mathematical-Formulation">Mathematical Formulation<a class="anchor-link" href="#Mathematical-Formulation">¶</a></h4><ol>
 <li><p><strong>Objective Function</strong>: Minimize portfolio variance
 $$\min_w \sigma_p^2 = \mathbf{w}^T \Sigma \mathbf{w}$$</p>
@@ -7995,7 +8008,7 @@ $$L(\mathbf{w}, \lambda_1, \lambda_2) = \mathbf{w}^T \Sigma \mathbf{w} - \lambda
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="5.-Numerical-Optimization-with-SLSQP">5. Numerical Optimization with SLSQP<a class="anchor-link" href="#5.-Numerical-Optimization-with-SLSQP">¶</a></h2><p>To overcome the limitations of the analytical approach, we use numerical optimization with Sequential Least Squares Programming (SLSQP). This method allows us to:</p>
+<h2 id="6.-Numerical-Optimization-with-SLSQP">6. Numerical Optimization with SLSQP<a class="anchor-link" href="#6.-Numerical-Optimization-with-SLSQP">¶</a></h2><p>To overcome the limitations of the analytical approach, we use numerical optimization with Sequential Least Squares Programming (SLSQP). This method allows us to:</p>
 <ul>
 <li>Enforce realistic constraints (e.g., no short-selling, weights sum to 1)</li>
 <li>Handle non-normally distributed returns</li>
@@ -8090,7 +8103,7 @@ $$L(\mathbf{w}, \lambda_1, \lambda_2) = \mathbf{w}^T \Sigma \mathbf{w} - \lambda
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="6.-The-effect-of-minimum-weight-constraints">6. The effect of minimum weight constraints<a class="anchor-link" href="#6.-The-effect-of-minimum-weight-constraints">¶</a></h2><p>Imposing minimum weight constraints (e.g., no asset can have a weight below 0.05) can significantly alter the efficient frontier. This is particularly relevant for investors who want to ensure diversification and avoid over-concentration in any single asset.
+<h2 id="7.-The-effect-of-minimum-weight-constraints">7. The effect of minimum weight constraints<a class="anchor-link" href="#7.-The-effect-of-minimum-weight-constraints">¶</a></h2><p>Imposing minimum weight constraints (e.g., no asset can have a weight below 0.05) can significantly alter the efficient frontier. This is particularly relevant for investors who want to ensure diversification and avoid over-concentration in any single asset.
 Below, we explore how such constraints affect the efficient frontier and the optimal portfolio selection.</p>
 <div class="highlight"><pre><span></span>
 </pre></div>
@@ -8295,7 +8308,7 @@ Minimum Weight: 10.00%
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="7.-The-effect-of-maximum-weight-constraints">7. The effect of maximum weight constraints<a class="anchor-link" href="#7.-The-effect-of-maximum-weight-constraints">¶</a></h2><p>Imposing maximum weight constraints (e.g., no asset can have a weight above 0.5) can also significantly alter the efficient frontier. This is particularly relevant for investors who want to avoid over-concentration in any single asset and ensure diversification.</p>
+<h2 id="8.-The-effect-of-maximum-weight-constraints">8. The effect of maximum weight constraints<a class="anchor-link" href="#8.-The-effect-of-maximum-weight-constraints">¶</a></h2><p>Imposing maximum weight constraints (e.g., no asset can have a weight above 0.5) can also significantly alter the efficient frontier. This is particularly relevant for investors who want to avoid over-concentration in any single asset and ensure diversification.</p>
 <div class="highlight"><pre><span></span>
 </pre></div>
 </div>
@@ -8488,6 +8501,26 @@ Maximum Weight: 40.00%
 </ul>
 <p>This suggests that while the optimizer can't fully concentrate in a few top-performing assets, it can still maintain similar risk levels by balancing exposures more evenly. The result is reduced return potential but without a dramatic increase in overall portfolio risk.</p>
 <p>This contrasts with minimum weight constraints, which not only reduce return potential, but also push the entire frontier toward higher volatility due to forced inclusion of potentially lower-return assets.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=29a0fea1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="9.-Conclusion">9. Conclusion<a class="anchor-link" href="#9.-Conclusion">¶</a></h2><p>This notebook has explored the construction of the efficient frontier using both analytical and numerical methods, highlighting the impact of constraints on portfolio optimization. Key takeaways include:</p>
+<ul>
+<li>The efficient frontier represents the optimal risk-return trade-off for a portfolio.</li>
+<li>The Sharpe ratio is a crucial metric for evaluating risk-adjusted performance.</li>
+<li>Monte Carlo simulations provide an intuitive view of the portfolio landscape, but do not directly reveal the efficient frontier.</li>
+<li>Analytical methods yield a smooth frontier but may not reflect real-world constraints.</li>
+<li>Numerical optimization with SLSQP allows for realistic constraints and better reflects practical portfolio management.</li>
+</ul>
+<div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </div>

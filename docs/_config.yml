@@ -1,0 +1,24 @@
+# GitHub Pages configuration for Portfolio Optimization project
+title: "Portfolio Optimization"
+description: "A personal project exploring risk-return trade-offs in portfolio management using Python"
+theme: jekyll-theme-minimal
+
+# Enable plugins
+plugins:
+  - jekyll-relative-links
+
+# Configure relative links
+relative_links:
+  enabled: true
+  collections: true
+
+# Markdown processing
+markdown: kramdown
+highlighter: rouge
+
+# Include/exclude files
+include:
+  - index.html
+
+# Custom CSS (optional)
+# If you want to customize the appearance, you can add custom CSS
