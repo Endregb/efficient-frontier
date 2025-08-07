@@ -1,6 +1,6 @@
 ## HTML Version
 You can view the HTML version of this notebook [here](https://endregb.github.io/portfolio-optimization/notebook.html).
-
+ 
 # Portfolio Optimization Without Shorting
 
 A practical exploration of portfolio optimization under long-only constraints.  
