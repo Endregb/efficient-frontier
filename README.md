@@ -1,5 +1,8 @@
 ## HTML Version
-You can view the HTML version of this notebook [here](https://endregb.github.io/portfolio-optimization/notebook.html).
+You can view the HTML version of this notebook:
+
+- **Project Overview**: [index.html](https://endregb.github.io/portfolio-optimization/) – Interactive landing page with project details
+- **Full Analysis**: [notebook.html](https://endregb.github.io/portfolio-optimization/notebook.html) – Complete notebook with all code and results
  
 # Portfolio Optimization Without Shorting
 

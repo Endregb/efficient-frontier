@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta viewport="width=device-width, initial-scale=1.0">
+    <title>Portfolio Optimization Without Shorting</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2E8B57 0%, #4682B4 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 60px 0 40px 0;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .header .course-info {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 40px;
+            margin: 20px 0;
+        }
+        
+        .description {
+            margin-bottom: 40px;
+        }
+        
+        .description h2 {
+            color: #333;
+            border-bottom: 3px solid #2E8B57;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .description p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #2E8B57;
+        }
+        
+        .feature h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .feature ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .feature li {
+            margin-bottom: 8px;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 50px 0 30px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #2E8B57 0%, #4682B4 100%);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 139, 87, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(46, 139, 87, 0.6);
+        }
+        
+        .finance-concept {
+            background: #e8f5e8;
+            border: 1px solid #b3d9b3;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .finance-concept h3 {
+            color: #2E8B57;
+            margin-bottom: 15px;
+        }
+        
+        .finance-concept p {
+            color: #1a5f3e;
+            margin-bottom: 10px;
+        }
+        
+        .visualizations {
+            background: #f0f8ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .visualizations h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .viz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .viz-item {
+            text-align: center;
+        }
+        
+        .viz-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        
+        .viz-item p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .limitations {
+            background: #fff8e1;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .limitations h3 {
+            color: #f57c00;
+            margin-bottom: 15px;
+        }
+        
+        .limitations ul {
+            color: #e65100;
+            padding-left: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            padding: 40px 0 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .main-content {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .viz-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Portfolio Optimization</h1>
+            <div class="subtitle">Long-Only Portfolio Construction with Real-World Constraints</div>
+            <div class="course-info">Personal Finance Project | Risk-Return Trade-off Analysis</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="description">
+                <h2>Project Overview</h2>
+                <p>
+                    This project explores <strong>portfolio optimization</strong> techniques for constructing efficient 
+                    portfolios under <strong>long-only constraints</strong>. Using modern portfolio theory and numerical 
+                    optimization, we analyze risk-return trade-offs in real-world investing scenarios where short selling 
+                    is not permitted.
+                </p>
+                <p>
+                    The analysis combines <strong>Monte Carlo simulation</strong>, <strong>Markowitz mean-variance optimization</strong>, 
+                    and <strong>Sequential Least Squares Programming (SLSQP)</strong> to construct efficient frontiers 
+                    under various practical constraints including minimum/maximum weights and sector limitations.
+                </p>
+            </div>
+            
+            <div class="finance-concept">
+                <h3>💰 Key Finance Concepts</h3>
+                <p><strong>Efficient Frontier:</strong> The set of optimal portfolios offering the highest expected return for each level of risk.</p>
+                <p><strong>Sharpe Ratio:</strong> A measure of risk-adjusted return, calculated as excess return per unit of volatility.</p>
+                <p><strong>Capital Market Line (CML):</strong> The line connecting the risk-free asset to the market portfolio, representing optimal risk-return combinations.</p>
+                <p><strong>Long-Only Constraints:</strong> Investment restrictions that prevent short selling, requiring all portfolio weights to be non-negative.</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>🎯 Project Objectives</h3>
+                    <ul>
+                        <li>Implement Markowitz mean-variance optimization</li>
+                        <li>Apply real-world long-only investment constraints</li>
+                        <li>Compare Monte Carlo vs. analytical optimization</li>
+                        <li>Analyze the impact of weight constraints on efficiency</li>
+                        <li>Visualize efficient frontiers and optimal allocations</li>
+                    </ul>
+                </div>
+                
+                <div class="feature">
+                    <h3>🔧 Optimization Methods</h3>
+                    <ul>
+                        <li>Monte Carlo simulation of random portfolios</li>
+                        <li>Sequential Least Squares Programming (SLSQP)</li>
+                        <li>Constrained quadratic programming</li>
+                        <li>Sharpe ratio maximization</li>
+                        <li>Minimum variance portfolio construction</li>
+                    </ul>
+                </div>
+                
+                <div class="feature">
+                    <h3>📊 Analysis Features</h3>
+                    <ul>
+                        <li>Efficient frontier construction and visualization</li>
+                        <li>Portfolio allocation pie charts</li>
+                        <li>Risk-return scatter plots</li>
+                        <li>Constraint impact analysis</li>
+                        <li>Capital Market Line identification</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="visualizations">
+                <h3>📈 Key Visualizations</h3>
+                <div class="viz-grid">
+                    <div class="viz-item">
+                        <img src="figures/SLSQP_vs_random.png" alt="Efficient frontier comparison between SLSQP optimization and random portfolios">
+                        <p>SLSQP Optimization vs Random Portfolios</p>
+                    </div>
+                    <div class="viz-item">
+                        <img src="figures/SLSQP_vs_minweights.png" alt="Impact of minimum weight constraints on efficient frontier">
+                        <p>Impact of Minimum Weight Constraints</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="limitations">
+                <h3>⚠️ Current Limitations</h3>
+                <ul>
+                    <li>Based on historical mean returns and covariances</li>
+                    <li>Assumes normally distributed returns</li>
+                    <li>No transaction costs or turnover constraints</li>
+                    <li>Static optimization (single-period model)</li>
+                    <li>Limited to publicly available market data</li>
+                </ul>
+            </div>
+            
+            <div class="cta-section">
+                <a href="notebook.html" class="cta-button">
+                    📊 View Interactive Notebook
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 | Portfolio Optimization Project | Personal Finance & Investment Analysis</p>
+        </div>
+    </div>
+</body>
+</html>
